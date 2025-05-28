@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anúncio Fácil - Calculadora de Precificação</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .shopee-gradient {
+            background: linear-gradient(135deg, #ee4d2d 0%, #ff7337 100%);
+        }
+        
+        .ml-gradient {
+            background: linear-gradient(135deg, #ffe600 0%, #ffcc00 100%);
+        }
+        
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .result-card {
+            transition: all 0.3s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .marketplace-logo {
+            transition: all 0.5s ease;
+        }
+        
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #68D391;
+        }
+        
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #68D391;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
+        <div class="max-w-4xl mx-auto">
+            <!-- Brand Name -->
+            <div class="text-center mb-4">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800">Anúncio Fácil</h1>
+                <div class="w-32 h-1 bg-blue-600 mx-auto mt-2 rounded-full"></div>
+            </div>
+            
+            <!-- Header with Dynamic Logo -->
+            <div class="text-center mb-8 relative">
+                <div id="shopee-logo" class="marketplace-logo absolute w-full transition-opacity duration-500">
+                    <div class="shopee-gradient text-white text-5xl md:text-6xl font-extrabold py-6 px-4 rounded-xl shadow-lg">
+                        SHOPEE
+                    </div>
+                </div>
+                <div id="ml-logo" class="marketplace-logo absolute w-full opacity-0 transition-opacity duration-500">
+                    <div class="ml-gradient text-blue-900 text-5xl md:text-6xl font-extrabold py-6 px-4 rounded-xl shadow-lg">
+                        MERCADO LIVRE
+                    </div>
+                </div>
+                <!-- Spacer div to maintain layout height -->
+                <div class="invisible text-5xl md:text-6xl font-extrabold py-6 px-4">
+                    SPACER
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <!-- Marketplace Selector -->
+                <div class="mb-8">
+                    <label class="block text-lg font-semibold text-gray-800 mb-3">MARKETPLACE</label>
+                    <div class="flex items-center justify-center">
+                        <span class="mr-3 text-sm font-medium text-orange-500">SHOPEE</span>
+                        <div class="relative inline-block w-16 mr-3 align-middle select-none">
+                            <input type="checkbox" id="marketplace-toggle" class="toggle-checkbox absolute block w-8 h-8 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="marketplace-toggle" class="toggle-label block overflow-hidden h-8 rounded-full bg-gray-300 cursor-pointer"></label>
+                        </div>
+                        <span class="text-sm font-medium text-yellow-600">MERCADO LIVRE</span>
+                    </div>
+                </div>
+                
+                <!-- Input Form -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-6">
+                        <h2 class="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-2">Dados do Produto</h2>
+                        
+                        <div>
+                            <label for="costPrice" class="block text-sm font-medium text-gray-700 mb-1">CUSTO DO PRODUTO (R$)</label>
+                            <input type="number" id="costPrice" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0.00" min="0" step="0.01">
+                        </div>
+                        
+                        <div>
+                            <label for="additionalCost" class="block text-sm font-medium text-gray-700 mb-1">ACRÉSCIMO (R$)</label>
+                            <input type="number" id="additionalCost" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0.00" min="0" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <h2 class="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-2">Taxas e Impostos</h2>
+                        
+                        <div>
+                            <label for="platformFee" class="block text-sm font-medium text-gray-700 mb-1">TAXA PLATAFORMA (%)</label>
+                            <input type="number" id="platformFee" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0.00" min="0" max="100" step="0.01">
+                        </div>
+                        
+                        <div>
+                            <label for="taxes" class="block text-sm font-medium text-gray-700 mb-1">IMPOSTOS (%)</label>
+                            <input type="number" id="taxes" class="input-field w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="0.00" min="0" max="100" step="0.01">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anticipation Section -->
+                <div class="mt-8 p-5 bg-gray-50 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <input id="anticipation-toggle" type="checkbox" class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                        <label for="anticipation-toggle" class="ml-2 text-lg font-medium text-gray-800">ANTECIPAÇÃO</label>
+                    </div>
+                    
+                    <div id="anticipation-options" class="ml-7 space-y-3 hidden">
+                        <!-- Shopee options -->
+                        <div id="shopee-anticipation-options">
+                            <div class="flex items-center">
+                                <input id="regular-seller" name="anticipation-type" type="radio" value="3.5" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" checked>
+                                <label for="regular-seller" class="ml-2 text-sm font-medium text-gray-700">DEMAIS VENDEDORES (3,5%)</label>
+                            </div>
+                            <div class="flex items-center mt-2">
+                                <input id="referred-seller" name="anticipation-type" type="radio" value="2.0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                                <label for="referred-seller" class="ml-2 text-sm font-medium text-gray-700">INDICADOS (2,0%)</label>
+                            </div>
+                        </div>
+                        
+                        <!-- Mercado Livre option -->
+                        <div id="ml-anticipation-option" class="hidden">
+                            <div class="flex items-center">
+                                <input id="ml-anticipation" name="anticipation-type" type="radio" value="3.8" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" checked>
+                                <label for="ml-anticipation" class="ml-2 text-sm font-medium text-gray-700">MERCADO LIVRE (3,8%)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Selling Price Input -->
+                <div class="mt-8">
+                    <label for="sellingPrice" class="block text-lg font-semibold text-gray-800 mb-2">PREÇO DE VENDA (R$)</label>
+                    <input type="number" id="sellingPrice" class="input-field w-full px-4 py-3 border-2 border-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-xl font-bold" placeholder="0.00" min="0" step="0.01">
+                </div>
+                
+                <!-- Calculate Button -->
+                <div class="mt-8 text-center">
+                    <button id="calculateBtn" class="shopee-gradient text-white font-bold py-3 px-12 rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 shadow-lg">
+                        CALCULAR
+                    </button>
+                </div>
+                
+                <!-- Results Section -->
+                <div id="resultsSection" class="mt-10 hidden">
+                    <h2 class="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-2 mb-6">RESULTADOS</h2>
+                    
+                    <div class="result-card bg-gradient-to-br from-green-50 to-green-100 p-5 rounded-lg shadow-md">
+                        <h3 class="text-lg font-medium text-green-800">MARGEM DE LUCRO</h3>
+                        <p id="profitMargin" class="text-2xl font-bold text-green-900 mt-2">R$ 0,00</p>
+                        <p id="profitMarginPercentage" class="text-lg font-medium text-green-700 mt-1">0%</p>
+                    </div>
+                    
+                    <!-- Detailed Breakdown -->
+                    <div class="mt-8 bg-gray-50 p-6 rounded-lg shadow-md">
+                        <h3 class="text-lg font-medium text-gray-800 mb-4">DETALHAMENTO</h3>
+                        
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Preço de Venda:</span>
+                                <span id="breakdownSellingPrice" class="font-medium">R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Taxa da Plataforma:</span>
+                                <span id="breakdownPlatformFee" class="font-medium text-red-600">- R$ 0,00</span>
+                            </div>
+                            <div id="breakdownAnticipationRow" class="flex justify-between items-center hidden">
+                                <span class="text-gray-600">Taxa de Antecipação:</span>
+                                <span id="breakdownAnticipation" class="font-medium text-red-600">- R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Impostos:</span>
+                                <span id="breakdownTaxes" class="font-medium text-red-600">- R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Custo do Produto:</span>
+                                <span id="breakdownCostPrice" class="font-medium text-red-600">- R$ 0,00</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Acréscimo:</span>
+                                <span id="breakdownAdditionalCost" class="font-medium text-red-600">- R$ 0,00</span>
+                            </div>
+                            <div class="border-t border-gray-300 pt-2 mt-2 flex justify-between items-center">
+                                <span class="text-gray-800 font-medium">Lucro Final:</span>
+                                <span id="breakdownProfit" class="font-bold text-lg">R$ 0,00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer -->
+            <div class="mt-8 text-center text-gray-600 text-sm">
+                <p>© 2023 Anúncio Fácil - Calculadora de Precificação</p>
+                <p class="mt-1">Esta é uma ferramenta de cálculo estimativo. Consulte um contador para decisões financeiras importantes.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const marketplaceToggle = document.getElementById('marketplace-toggle');
+            const shopeeLogo = document.getElementById('shopee-logo');
+            const mlLogo = document.getElementById('ml-logo');
+            const calculateBtn = document.getElementById('calculateBtn');
+            const anticipationToggle = document.getElementById('anticipation-toggle');
+            const anticipationOptions = document.getElementById('anticipation-options');
+            const shopeeAnticipationOptions = document.getElementById('shopee-anticipation-options');
+            const mlAnticipationOption = document.getElementById('ml-anticipation-option');
+            const resultsSection = document.getElementById('resultsSection');
+            
+            // Set default platform fee based on marketplace
+            updatePlatformFee();
+            
+            // Toggle between marketplaces
+            marketplaceToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    // Mercado Livre
+                    shopeeLogo.classList.add('opacity-0');
+                    mlLogo.classList.remove('opacity-0');
+                    calculateBtn.classList.remove('shopee-gradient', 'text-white');
+                    calculateBtn.classList.add('ml-gradient', 'text-blue-900');
+                    
+                    // Show ML anticipation options, hide Shopee options
+                    shopeeAnticipationOptions.classList.add('hidden');
+                    mlAnticipationOption.classList.remove('hidden');
+                    document.getElementById('ml-anticipation').checked = true;
+                } else {
+                    // Shopee
+                    shopeeLogo.classList.remove('opacity-0');
+                    mlLogo.classList.add('opacity-0');
+                    calculateBtn.classList.add('shopee-gradient', 'text-white');
+                    calculateBtn.classList.remove('ml-gradient', 'text-blue-900');
+                    
+                    // Show Shopee anticipation options, hide ML options
+                    shopeeAnticipationOptions.classList.remove('hidden');
+                    mlAnticipationOption.classList.add('hidden');
+                    document.getElementById('regular-seller').checked = true;
+                }
+                
+                updatePlatformFee();
+            });
+            
+            // Function to update platform fee based on selected marketplace
+            function updatePlatformFee() {
+                const platformFeeInput = document.getElementById('platformFee');
+                if (marketplaceToggle.checked) {
+                    // Mercado Livre default fee
+                    platformFeeInput.value = '16';
+                } else {
+                    // Shopee default fee
+                    platformFeeInput.value = '18';
+                }
+            }
+            
+            // Toggle anticipation options
+            anticipationToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    anticipationOptions.classList.remove('hidden');
+                } else {
+                    anticipationOptions.classList.add('hidden');
+                }
+            });
+            
+            // Format currency function
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    minimumFractionDigits: 2
+                }).format(value);
+            }
+            
+            // Calculate function
+            calculateBtn.addEventListener('click', function() {
+                // Get input values
+                const costPrice = parseFloat(document.getElementById('costPrice').value) || 0;
+                const additionalCost = parseFloat(document.getElementById('additionalCost').value) || 0;
+                const sellingPrice = parseFloat(document.getElementById('sellingPrice').value) || 0;
+                const platformFeePercentage = parseFloat(document.getElementById('platformFee').value) || 0;
+                const taxesPercentage = parseFloat(document.getElementById('taxes').value) || 0;
+                
+                // Check if anticipation is enabled
+                const anticipationEnabled = document.getElementById('anticipation-toggle').checked;
+                let anticipationRate = 0;
+                
+                if (anticipationEnabled) {
+                    const selectedAnticipation = document.querySelector('input[name="anticipation-type"]:checked');
+                    anticipationRate = selectedAnticipation ? parseFloat(selectedAnticipation.value) : 
+                                      (marketplaceToggle.checked ? 3.8 : 3.5); // Default based on marketplace
+                }
+                
+                // Calculate values
+                const platformFeeAmount = (sellingPrice * platformFeePercentage) / 100;
+                const taxesAmount = (sellingPrice * taxesPercentage) / 100;
+                const anticipationAmount = anticipationEnabled ? (sellingPrice * anticipationRate) / 100 : 0;
+                
+                const totalCosts = costPrice + additionalCost + platformFeeAmount + taxesAmount + anticipationAmount;
+                const profit = sellingPrice - totalCosts;
+                
+                // Calculate percentages
+                const profitPercentage = sellingPrice > 0 ? (profit / sellingPrice) * 100 : 0;
+                
+                // Update results
+                document.getElementById('profitMargin').textContent = formatCurrency(profit);
+                document.getElementById('profitMarginPercentage').textContent = profitPercentage.toFixed(2) + '%';
+                
+                // Update breakdown
+                document.getElementById('breakdownSellingPrice').textContent = formatCurrency(sellingPrice);
+                document.getElementById('breakdownPlatformFee').textContent = '- ' + formatCurrency(platformFeeAmount);
+                document.getElementById('breakdownTaxes').textContent = '- ' + formatCurrency(taxesAmount);
+                document.getElementById('breakdownCostPrice').textContent = '- ' + formatCurrency(costPrice);
+                document.getElementById('breakdownAdditionalCost').textContent = '- ' + formatCurrency(additionalCost);
+                document.getElementById('breakdownProfit').textContent = formatCurrency(profit);
+                
+                // Show/hide anticipation row in breakdown
+                const breakdownAnticipationRow = document.getElementById('breakdownAnticipationRow');
+                if (anticipationEnabled) {
+                    breakdownAnticipationRow.classList.remove('hidden');
+                    document.getElementById('breakdownAnticipation').textContent = '- ' + formatCurrency(anticipationAmount);
+                } else {
+                    breakdownAnticipationRow.classList.add('hidden');
+                }
+                
+                // Show results section
+                resultsSection.classList.remove('hidden');
+                
+                // Add color to profit based on value
+                const profitElement = document.getElementById('profitMargin');
+                if (profit > 0) {
+                    profitElement.classList.remove('text-red-900');
+                    profitElement.classList.add('text-green-900');
+                } else {
+                    profitElement.classList.remove('text-green-900');
+                    profitElement.classList.add('text-red-900');
+                }
+                
+                // Scroll to results
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+            
+            // Add input validation
+            const numericInputs = document.querySelectorAll('input[type="number"]');
+            numericInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this.value < 0) this.value = 0;
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'946fa0a952056279',t:'MTc0ODQ1NDk3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
